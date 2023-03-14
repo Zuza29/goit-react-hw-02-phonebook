@@ -6,6 +6,7 @@ import { Section } from './Section/Section';
 import { Notification } from './Notification/Notification';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { Notify } from 'notiflix';
 
 export class App extends Component {
   state = {
@@ -44,12 +45,25 @@ export class App extends Component {
       number: this.state.number,
       id: nanoid(),
     };
-    this.setState({
-      contacts: [...this.state.contacts, user],
-      name: '',
-      number: '',
-    });
-    console.log(this.state);
+
+    let contactExists = false;
+
+    this.state.contacts.forEach(contact => {
+      if (contact.name.toLowerCase() === user.name.toLowerCase()) {
+        Notify.info(`${contact.name} is already in the Phonebook.`);
+        contactExists = true;
+      }
+    })
+      this.setState({
+        name: '',
+        number: '',
+      });
+    
+    if (!contactExists) {
+      this.setState({
+        contacts: [...this.state.contacts, user],
+      });
+    }
   };
 
   deleteContact = id => {
@@ -99,3 +113,4 @@ export class App extends Component {
     );
   }
 }
+

@@ -1,5 +1,6 @@
 import css from './Input.module.css';
 import { capitalizeFirstLetter } from 'utils/functions';
+import PropTypes from 'prop-types';
 
 export const Input = props => {
   const { name, type, pattern, title, onChange, value } = props;
@@ -21,4 +22,12 @@ export const Input = props => {
       />
     </div>
   );
+};
+
+Input.propTypes = {
+  name: PropTypes.string,
+  type: PropTypes.string,
+  pattern: PropTypes.string,
+  title: PropTypes.string,
+  onChange: PropTypes.func,
 };

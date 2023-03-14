@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import css from '../Input/Input.module.css';
+import PropTypes from 'prop-types';
 
 export class Filter extends Component {
   render() {
@@ -18,4 +19,9 @@ export class Filter extends Component {
       </div>
     );
   }
+}
+
+Filter.propTypes = {
+  onChange: PropTypes.func,
+  filteredContacts: PropTypes.array,
 }

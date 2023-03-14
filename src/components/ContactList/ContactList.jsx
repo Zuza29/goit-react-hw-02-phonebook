@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import css from '../ContactList/ContactList.module.css';
 import cssButton from '../Button/Button.module.css';
+import PropTypes from 'prop-types';
 
 export class ContactList extends Component {
   render() {
@@ -29,4 +30,9 @@ export class ContactList extends Component {
       </>
     );
   }
+}
+
+ContactList.propTypes = {
+  contacts: PropTypes.array,
+  deleteContact: PropTypes.func,
 }
