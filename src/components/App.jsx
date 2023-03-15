@@ -1,6 +1,5 @@
 import { Component } from 'react';
-import { Button } from './Button/Button';
-import { Input } from './Input/Input';
+import { Form } from './Form/Form';
 import { nanoid } from 'nanoid';
 import { Section } from './Section/Section';
 import { Notification } from './Notification/Notification';
@@ -29,17 +28,26 @@ export class App extends Component {
 
   filter = e => {
     this.setState({
-      filter: e.currentTarget.value
-})
-  }
+      filter: e.currentTarget.value,
+    });
+  };
 
   filterContacts = () => {
     const { filter, contacts } = this.state;
-    return contacts.filter(contact => 
-      contact.name.toLowerCase().includes(filter.toLowerCase()))
-  }
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
 
-  submitForm = () => {
+  reset = () => {
+    this.setState({
+      name: '',
+      number: '',
+    });
+  };
+
+  submitForm = e => {
+    e.preventDefault();
     const user = {
       name: this.state.name,
       number: this.state.number,
@@ -53,23 +61,28 @@ export class App extends Component {
         Notify.info(`${contact.name} is already in the Phonebook.`);
         contactExists = true;
       }
-    })
-      this.setState({
-        name: '',
-        number: '',
-      });
-    
+    });
+
     if (!contactExists) {
       this.setState({
         contacts: [...this.state.contacts, user],
       });
+      Notify.success(`${user.name} was added to the Phonebook.`);
     }
+
+    this.reset();
   };
 
-  deleteContact = id => {
+  deleteContact = identification => {
+    const deletedName = this.state.contacts.find(
+      ({ id }) => id === identification
+    ).name;
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
+      contacts: prevState.contacts.filter(
+        contact => contact.id !== identification
+      ),
     }));
+    Notify.success(`${deletedName} was deleted from the Phonebook.`);
   };
 
   render() {
@@ -78,39 +91,31 @@ export class App extends Component {
     return (
       <div className="App">
         <Section title="Phonebook">
-          <Input
-            value={this.state.name}
-            onChange={this.handleChange}
-            type="text"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            name="name"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          ></Input>
-          <Input
-            value={this.state.number}
-            onChange={this.handleChange}
-            type="tel"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            name="number"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          ></Input>
-          <Button name="Add contact" onClick={this.submitForm}></Button>
+          <Form
+            submitForm={this.submitForm}
+            name={this.state.name}
+            number={this.state.number}
+            handleChange={this.handleChange}
+          ></Form>
         </Section>
         <Section title="Contacts">
           {this.state.contacts.length === 0 ? (
             <Notification message="There are no contacts yet" />
           ) : (
-              <>
-              <Filter value={value} onChange={this.filter} filteredContacts={this.filteredContacts} />
-            <ContactList
-              contacts={filteredContacts}
-              deleteContact={this.deleteContact}
-                ></ContactList>
-                </>
+            <>
+              <Filter
+                value={value}
+                onChange={this.filter}
+                filteredContacts={this.filteredContacts}
+              />
+              <ContactList
+                contacts={filteredContacts}
+                deleteContact={this.deleteContact}
+              ></ContactList>
+            </>
           )}
         </Section>
       </div>
     );
   }
 }
-

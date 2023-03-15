@@ -8,19 +8,22 @@ export const Input = props => {
     onChange(name, event.target.value);
   };
   return (
-    <div>
-      <h3>{capitalizeFirstLetter(name)}</h3>
-      <input
-        className={css.input}
-        value={value}
-        onChange={onHandleChange}
-        type={type}
-        name={name}
-        pattern={pattern}
-        title={title}
-        required
-      />
-    </div>
+    <>
+      <label htmlFor={name}>
+        {capitalizeFirstLetter(name)}
+        <input
+          className={css.input}
+          value={value}
+          onChange={onHandleChange}
+          type={type}
+          name={name}
+          id={name}
+          pattern={pattern}
+          title={title}
+          required
+        />
+      </label>
+    </>
   );
 };
 

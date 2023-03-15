@@ -5,16 +5,19 @@ import PropTypes from 'prop-types';
 export class Filter extends Component {
   render() {
     const { value, onChange, filteredContacts } = this.props;
-    
+
     return (
       <div className={css.filter}>
-        <h3>Filter contacts by name</h3>
+        <label htmlFor="filter">
+          Filter contacts by name
           <input
             className={css.input}
             type="search"
             value={value}
             onChange={onChange}
+            id="filter"
           />
+        </label>
         <ul>{filteredContacts}</ul>
       </div>
     );
@@ -24,4 +27,5 @@ export class Filter extends Component {
 Filter.propTypes = {
   onChange: PropTypes.func,
   filteredContacts: PropTypes.array,
-}
+  value: PropTypes.string,
+};

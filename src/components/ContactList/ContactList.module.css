@@ -22,7 +22,6 @@
   font-size: 1.2rem;
 }
 
-
 @media screen and (max-width: 630px) {
   .contactListItem {
     display: flex;
@@ -34,6 +33,6 @@
   }
 
   .column2 > button {
-  margin-top: 40px;
-}
+    margin-top: 40px;
+  }
 }

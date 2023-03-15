@@ -2,10 +2,10 @@ import css from './Button.module.css';
 import PropTypes from 'prop-types';
 
 export const Button = props => {
-  const { name, onClick } = props;
+  const { type, name, onClick } = props;
 
   return (
-    <button type="button" className={css.button} onClick={onClick}>
+    <button type={type} className={css.button} onClick={onClick}>
       {name}
     </button>
   );
@@ -14,4 +14,5 @@ export const Button = props => {
 Button.propTypes = {
   name: PropTypes.string,
   onClick: PropTypes.func,
-}
+  type: PropTypes.string,
+};

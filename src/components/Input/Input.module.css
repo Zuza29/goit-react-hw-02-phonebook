@@ -1,11 +1,11 @@
 .input {
-  display:block;
+  display: block;
   width: 97%;
-  margin:10px 0;
-  padding:10px;
-  border-radius:10px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
   border: 1px solid darkgray;
-  transition: .3s border-color;
+  transition: 0.3s border-color;
 }
 
 .input:hover {
